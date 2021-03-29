@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#include <string.h>
 #include "utils.h"
 #include "dict.h"
 #include "server.h"
@@ -36,11 +37,12 @@ void server_init(struct dict *d) {
   sin.sin_port = htons(DEFAULT_PORT);
 
   if(!bind(socket_fd, (struct sockaddr *) &sin, sizeof(sin))) { // ec
-   
+    printf("could not bind\n");   
   }
 
   const int BACKLOG_SZ = 1024;
   if(!listen(socket_fd, BACKLOG_SZ)) {
+    printf("could not list\n");
   }  
 
 
