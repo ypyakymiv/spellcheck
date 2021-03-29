@@ -45,8 +45,12 @@ void server_init(struct dict *d) {
 
 
   int client_fd;
-  while(fd = accept(socket_fd, NULL, NULL)) {
-    char c;
+  int buff_sz = 1024;
+  char *buff = ec_malloc(sizeof(char) * buff_sz);
+  memset(buff, 0x0, sizeof(char) * buff_sz);
+  int read_sz;
+  while((client_fd = accept(socket_fd, NULL, NULL))) {
+    while((read_sz = read(client_fd, buff, buff_sz))) printf("%s", buff);
   }
  
   // listen on specified port
