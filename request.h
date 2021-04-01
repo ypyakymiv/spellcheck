@@ -2,6 +2,7 @@
 #define REQUEST_HEADER_INCLUDED
 
 #include <semaphore.h>
+#include "dict.h"
 
 enum status {
   WRONG, OK
@@ -16,5 +17,6 @@ struct req_buffer {
 };
 
 void init_req_buffer(struct req_buffer *);
+void req_responder(struct req_buffer *, struct dict *);
 
 #endif

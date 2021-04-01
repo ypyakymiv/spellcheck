@@ -7,5 +7,10 @@
 void init_req_buffer(struct req_buffer *rb) {
   rb->fds = ec_malloc(sizeof(int) * DEFAULT_REQ_SZ);
   rb->alloc_sz = DEFAULT_REQ_SZ;
-  sem_init(&rb->reqs, 0x0, rb->alloc_sz); 
+  sem_init(&rb->reqs, 0x0, rb->alloc_sz);
+}
+
+void req_responder(struct req_buffer *rb, struct dict *d) {
+  sem_wait(&rb->reqs);
+  
 }
