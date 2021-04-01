@@ -17,6 +17,7 @@ int main(int argc, char **argv) {
   struct dict *d = malloc(sizeof(struct dict));
   load_dict(d, dict_file);
 
+
   server_init(d);
 
 }
@@ -31,29 +32,27 @@ void server_init(struct dict *d) {
     exit(1);
   }
 
+  printf("socket opened with fd: %d\n", socket_fd);
+
   struct sockaddr_in sin;
   sin.sin_family = AF_INET;
   sin.sin_addr.s_addr = htonl(INADDR_ANY);
   sin.sin_port = htons(DEFAULT_PORT);
 
-  if(!bind(socket_fd, (struct sockaddr *) &sin, sizeof(sin))) { // ec
-    printf("could not bind\n");   
-  }
+  int bind_return = bind(socket_fd, (struct sockaddr *) &sin, sizeof(sin)); // ec
 
   const int BACKLOG_SZ = 1024;
-  if(!listen(socket_fd, BACKLOG_SZ)) {
-    printf("could not list\n");
-  }  
-
+  int listen_return = listen(socket_fd, BACKLOG_SZ);
 
   int client_fd;
   int buff_sz = 1024;
   char *buff = ec_malloc(sizeof(char) * buff_sz);
   memset(buff, 0x0, sizeof(char) * buff_sz);
   int read_sz;
+
   while((client_fd = accept(socket_fd, NULL, NULL))) {
     while((read_sz = read(client_fd, buff, buff_sz))) printf("%s", buff);
   }
- 
+
   // listen on specified port
 }

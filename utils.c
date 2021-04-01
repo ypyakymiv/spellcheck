@@ -55,3 +55,7 @@ int is_same_file(char *a, char *b) {
 int ec_open(const char *filename, int flags) {
   return open(filename, flags);  
 }
+
+void trim_newline(char *s, int len) {
+  if(len > 0 && s[len - 1] == '\n') s[len - 1] = '\0';
+}

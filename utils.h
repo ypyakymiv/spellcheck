@@ -15,5 +15,6 @@ void perr_and_exit(int code);
 int ec_fseek_backwards(FILE *stream, long offset, int whence);
 int is_same_file(char *a, char *b);
 int ec_open(const char *filename, int flags);
+void trim_newline(char *, int);
 
 #endif

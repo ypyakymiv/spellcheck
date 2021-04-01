@@ -8,7 +8,7 @@ int streq(char *, char *);
 
 void load_dict(struct dict *d, char *filename) {
   const int START_BUFFER_SIZE = 1024;
-  
+
   int alloc_sz = START_BUFFER_SIZE;
   int curr_sz = 0;
 
@@ -17,7 +17,8 @@ void load_dict(struct dict *d, char *filename) {
   FILE *f = ec_fopen(filename, "r");
   char *line = NULL;
   size_t line_sz = 0;
-  while(getline(&line, &line_sz, f)) {
+
+  while(getline(&line, &line_sz, f) != EOF) {
     if(curr_sz >= alloc_sz) { // try realloc
       int new_alloc_sz = 2 * alloc_sz;
       char **new_words = ec_malloc(sizeof(char *) * new_alloc_sz);
@@ -27,13 +28,15 @@ void load_dict(struct dict *d, char *filename) {
       alloc_sz = new_alloc_sz;
     }
 
+    trim_newline(line, line_sz);
     words[curr_sz] = line;
     curr_sz++;
- 
+
     line = NULL;
     line_sz = 0;
   }
-  
+
+
   d->words = words;
   d->sz = curr_sz;
 }
