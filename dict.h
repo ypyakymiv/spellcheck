@@ -12,4 +12,6 @@ void load_dict(struct dict *, char *);
 void free_dict(struct dict *);
 int is_in_dict(struct dict *, char *);
 
+struct dict dictionary;
+
 #endif
