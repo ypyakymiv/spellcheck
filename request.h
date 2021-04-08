@@ -21,12 +21,16 @@ struct req_buffer {
   pthread_mutex_t access;
 };
 
-void queue(struct req_buffer *, int);
-int dequeue(struct req_buffer *);
+void req_queue(struct req_buffer *, int);
+int req_dequeue(struct req_buffer *);
 
 void init_req_buffer(struct req_buffer *);
-void req_responder(struct req_buffer *, struct dict *);
+void req_responder(struct req_buffer *);
 void handle_client(int client_fd);
+
+struct req_responder_args { struct req_buffer *rb; };
+void *req_responder_thread(void *);
+
 
 #endif
 
